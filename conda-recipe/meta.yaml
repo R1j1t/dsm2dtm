@@ -14,7 +14,7 @@ source:
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+  script: "{{ PYTHON }} -m pip install . -vv "
 
 requirements:
   build:
@@ -34,9 +34,23 @@ requirements:
 test:
   imports:
     - dsm2dtm
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
   home: https://github.com/seedlit/dsm2dtm
-  license: BSD
-  license_family: BSD
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
   summary: Generates DTM (Digital Terrain Model) from DSM (Digital Surface Model).
+  description: |
+    Generates DTM (Digital Terrain Model) from DSM (Digital Surface Model).
+  doc_url: https://github.com/seedlit/dsm2dtm#readme
+  dev_url: https://github.com/seedlit/dsm2dtm
+extra:
+  recipe-maintainers:
+    # GitHub IDs for maintainers of the recipe.
+    # Always check with the people listed below if they are OK becoming maintainers of the recipe. (There will be spam!)
+    - seedlit
