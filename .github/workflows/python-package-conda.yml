@@ -7,14 +7,12 @@ on:
     branches: [ main ]
 
 jobs:
-  build-OS:
-    # runs-on: [macos-latest, ubuntu-latest, windows-latest]
+  build-linux:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
       max-parallel: 5
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.6
@@ -41,12 +39,11 @@ jobs:
       run: |
         conda install dsm2dtm -c $CONDA/conda-bld/  -c conda-forge
     - name: Package creation for all OS from linux
-      if: ${{ }}
       run: |
         mkdir outputdir
-        if 
+        if [ ${{ runner.os }} == 'Linux']; then
           conda convert --platform all $CONDA/conda-bld/linux-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/
-        elif [runner.os == 'Windows']; then
+        elif [ ${{ runner.os }} == 'Windows']; then
           conda convert --platform all $CONDA/conda-bld/win-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/
         else
           conda convert --platform all $CONDA/conda-bld/osx-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/      
