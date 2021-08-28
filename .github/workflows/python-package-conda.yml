@@ -41,20 +41,16 @@ jobs:
       run: |
         conda install dsm2dtm -c $CONDA/conda-bld/  -c conda-forge
     - name: Package creation for all OS from linux
-      if: ${{ jobs.build-OS.runs-on == 'ubuntu-latest'}}
+      if: ${{ }}
       run: |
         mkdir outputdir
-        conda convert --platform all $CONDA/conda-bld/linux-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/
-    - name: Package creation for all OS from windows
-      if: ${{ jobs.build-OS.runs-on == 'ubuntu-latest'}}
-      run: |
-        mkdir outputdir
-        conda convert --platform all $CONDA/conda-bld/win-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/
-    - name: Package creation for all OS from mac
-      if: ${{ jobs.build-OS.runs-on == 'ubuntu-latest'}}
-      run: |
-        mkdir outputdir
-        conda convert --platform all $CONDA/conda-bld/osx-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/      
+        if 
+          conda convert --platform all $CONDA/conda-bld/linux-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/
+        elif [runner.os == 'Windows']; then
+          conda convert --platform all $CONDA/conda-bld/win-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/
+        else
+          conda convert --platform all $CONDA/conda-bld/osx-64/dsm2dtm-0.1.1-py39_0.tar.bz2 -o outputdir/      
+        fi
     - name: Lint with flake8
       run: |
         #conda install flake8
